@@ -13,15 +13,24 @@ This is just the start... Much more to come :D
 
 ### Dependencies
 * python3
-* chess
-* random
+* python modules in `requirements.txt`
 
 ### Running
+On some systems python version 3 and pip is aliased to `pip3` and `python3` so
+please change commands accordingly.
 ```
-# Install dependencies first
 git clone https://github.com/WalterSmuts/python-chess-client.git
+pip install -r requirements.txt
 cd python-chess-client
-python3 example.py
-# Maybe on some systems python3 is aliased to just `python`:
-# python example.py
+python example.py
 ```
+
+If you're interested in what's happening behind the curtains, check out
+[chess-server](https://github.com/WalterSmuts/chess-server). If you want, you
+can clone it and run it locally, pointing the client towards the local
+endpoint. Currently it's quite bare, but I've planned a bunch more features.
+
+### Planned features:
+* Play against another client
+* Multiple concurrent games
+* Time constraints
