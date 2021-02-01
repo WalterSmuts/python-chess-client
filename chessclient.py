@@ -12,18 +12,22 @@ class ChessClient:
         self.socket.send(str(self.opponent).encode('utf-8'))
         while True:
             data = self.socket.recv(92).decode("utf-8")
-            print(data)
             if len(data) == 1:
                 break
+            print(data)
 
             move = self.player.get_move(data)
             self.socket.send(str(move).encode('utf-8'))
 
-        if data == "W":
+        result = data
+        data = self.socket.recv(92).decode("utf-8")
+
+        print(data)
+        if result == "W":
             print("You win!")
-        elif data == "L":
+        elif result == "L":
             print("You lose!")
-        elif data == "D":
+        elif result == "D":
             print("It's a draw...")
         else:
             print("Unknown control message.")
