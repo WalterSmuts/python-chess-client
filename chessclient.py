@@ -31,3 +31,7 @@ class ChessClient:
             print("It's a draw...")
         else:
             print("Unknown control message.")
+
+        url = self.socket.recv(92).decode("utf-8")
+        print("Find your game at:");
+        print(url);
