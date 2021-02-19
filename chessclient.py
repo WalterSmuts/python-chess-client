@@ -1,5 +1,7 @@
 import socket
 
+ENDIANNESS = "big"
+
 class ChessClient:
     def __init__(self, player, opponent = "Greedy", server = "chess.waltersmuts.com", port = 3333):
         self.player = player
@@ -8,19 +10,27 @@ class ChessClient:
         self.socket.connect((server, port))
         print("Connected to server: {} at port {}".format(server, port))
 
+    def send_lenth_prefixed(self, data):
+        self.socket.send(len(data).to_bytes(1, ENDIANNESS))
+        self.socket.send(data)
+
+    def recv_lenth_prefixed(self):
+        length = int.from_bytes(self.socket.recv(1), ENDIANNESS)
+        return self.socket.recv(length)
+
     def run(self):
-        self.socket.send(str(self.opponent).encode('utf-8'))
+        self.send_lenth_prefixed(str(self.opponent).encode('utf-8'))
         while True:
-            data = self.socket.recv(92).decode("utf-8")
+            data = self.recv_lenth_prefixed().decode("utf-8")
             if len(data) == 1:
                 break
             print(data)
 
             move = self.player.get_move(data)
-            self.socket.send(str(move).encode('utf-8'))
+            self.send_lenth_prefixed(str(move).encode('utf-8'))
 
         result = data
-        data = self.socket.recv(92).decode("utf-8")
+        data = self.recv_lenth_prefixed().decode("utf-8")
 
         print(data)
         if result == "W":
@@ -32,6 +42,6 @@ class ChessClient:
         else:
             print("Unknown control message.")
 
-        url = self.socket.recv(92).decode("utf-8")
+        url = self.recv_lenth_prefixed().decode("utf-8")
         print("Find your game at:");
         print(url);
