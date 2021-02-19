@@ -1,8 +1,10 @@
 ## A python chess client
 
 A simple client to get started with coding a chess-ai in python. This client
-talks to the chess server running on waltersmuts.com, playing against the Greedy
-algorithm, by default. There is also a `Random` opponent for if you're struggling.
+talks to the chess server running on
+[chess.waltersmuts.com](https://chess.waltersmuts.com), playing against the Greedy
+algorithm, by default. There is also a `Random` opponent for if you're
+struggling.
 
 Take a look at the `example.py` file and you will see how to use the
 `chessclient` module. Per default it currently outputs the board state in

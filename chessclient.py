@@ -1,7 +1,7 @@
 import socket
 
 class ChessClient:
-    def __init__(self, player, opponent = "Greedy", server = "waltersmuts.com", port = 3333):
+    def __init__(self, player, opponent = "Greedy", server = "chess.waltersmuts.com", port = 3333):
         self.player = player
         self.opponent = opponent
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
