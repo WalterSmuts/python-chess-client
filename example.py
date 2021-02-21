@@ -16,6 +16,10 @@ class Player:
         return self.decision_function(fen)
 
 
+# Default (Random)
 ChessClient(Player(random_decision_function)).run()
-#ChessClient(Player(random_decision_function), "Random").run() # Easy
-#ChessClient(Player(random_decision_function), "Greedy").run() # Harder
+
+# Opponent options
+#ChessClient(Player(random_decision_function), "Random").run()  # Easy
+#ChessClient(Player(random_decision_function), "Greedy").run()  # Harder
+#ChessClient(Player(random_decision_function), "Network").run() # Another network player

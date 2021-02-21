@@ -3,7 +3,7 @@ import socket
 ENDIANNESS = "big"
 
 class ChessClient:
-    def __init__(self, player, opponent = "Greedy", server = "chess.waltersmuts.com", port = 3333):
+    def __init__(self, player, opponent = "Random", server = "chess.waltersmuts.com", port = 3333):
         self.player = player
         self.opponent = opponent
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,6 +20,8 @@ class ChessClient:
 
     def run(self):
         self.send_lenth_prefixed(str(self.opponent).encode('utf-8'))
+        if self.opponent == "Network":
+            print("Waiting for another network opponent to  connect...")
         while True:
             data = self.recv_lenth_prefixed().decode("utf-8")
             if len(data) == 1:
