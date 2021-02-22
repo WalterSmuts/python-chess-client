@@ -5,7 +5,6 @@ import random
 def random_decision_function(fen_string):
     legal_moves = list(chess.Board(fen_string).legal_moves)
     selected_move = random.choice(legal_moves)
-    print(selected_move)
     return selected_move
 
 class Player:
