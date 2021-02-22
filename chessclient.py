@@ -2,6 +2,8 @@ import socket
 
 ENDIANNESS = "big"
 
+
+
 class ChessClient:
     def __init__(self, player, opponent = "Random", server = "chess.waltersmuts.com", port = 3333):
         self.player = player
@@ -9,6 +11,24 @@ class ChessClient:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((server, port))
         print("Connected to server: {} at port {}".format(server, port))
+        
+    @staticmethod
+    def print_board(fen_string):
+        board_bar = ''.join(['=' for i in range(15)])
+        board = fen_string.split(' ')[0]
+        rows = board.split('/')
+        print('\n'+ board_bar )
+        for row in rows:
+            build_row = []
+            for col in row:
+                if col.isdigit():
+                    for i in range(int(col)):
+                        build_row.append('.')
+                else:
+                    build_row.append(col)
+            print(' '.join(build_row))  
+        print(board_bar)
+        
 
     def send_lenth_prefixed(self, data):
         self.socket.send(len(data).to_bytes(1, ENDIANNESS))
@@ -16,7 +36,7 @@ class ChessClient:
 
     def recv_lenth_prefixed(self):
         length = int.from_bytes(self.socket.recv(1), ENDIANNESS)
-        return self.socket.recv(length)
+        return self.socket.recv(length) 
 
     def run(self):
         self.send_lenth_prefixed(str(self.opponent).encode('utf-8'))
@@ -26,7 +46,7 @@ class ChessClient:
             data = self.recv_lenth_prefixed().decode("utf-8")
             if len(data) == 1:
                 break
-            print(data)
+            self.print_board(data)
 
             move = self.player.get_move(data)
             self.send_lenth_prefixed(str(move).encode('utf-8'))
